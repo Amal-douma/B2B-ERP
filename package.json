@@ -59,5 +59,14 @@
   },
   "keywords": [],
   "author": "amal douma",
-  "license": "ISC"
+  "license": "ISC",
+  "name": "app",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Amal-douma/B2B-ERP.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Amal-douma/B2B-ERP/issues"
+  },
+  "homepage": "https://github.com/Amal-douma/B2B-ERP#readme"
 }
