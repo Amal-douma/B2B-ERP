@@ -5,6 +5,7 @@ import { css } from "styled-components/macro"; //eslint-disable-line
 import Header from "components/headers/light.js";
 import Footer from "components/footers/LandingPageFooter";
 import ContactUsForm from "components/forms/TwoColContactUsWithIllustrationFullForm.js";
+import Contactpassword from "components/forms/TwoColContactUsWithIllustration";
 // import ContactDetails from "components/cards/ThreeColContactDetails.js";
 
 // const Address = tw.span`leading-relaxed`;
@@ -15,7 +16,18 @@ export default () => {
   return (
     <AnimationRevealPage>
       <Header />
-      <ContactUsForm />
+      <div>
+        <div>
+        <ContactUsForm /> 
+        </div>
+        <h1>si vous avez modifier votre mot de passe</h1>
+        <div>
+        <Contactpassword/>
+
+        </div>
+      </div>
+
+
       {/* <ContactDetails
         cards={[
           {

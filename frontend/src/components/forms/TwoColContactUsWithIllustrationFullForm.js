@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
@@ -7,6 +7,7 @@ import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 import EmailIllustrationSrc from "images/email-illustration.svg";
 import { useHistory } from "react-router-dom";
 import Axios from "axios";
+
 
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto py-20 md:py-24`;
@@ -48,44 +49,45 @@ export default ({
 }) => {
 
   const history = useHistory();
+  const storedData = JSON.parse(localStorage.getItem('user'));
 
   const [formData, setFormData] = useState(() => {
-    const storedData = localStorage.getItem('formData');
-    console.log(storedData);
-    return storedData ? JSON.parse(storedData) :
-      {
-        lastname: '',
-        firstname: '',
-        email: '',
-        password: '',
-        tel: '',
-        entreprisse: ''
-      }
-
+    return storedData ? storedData : {
+      lastname: `${storedData.lastname}`,
+      firstname: `${storedData.firstname}`,
+      email: `${storedData.email}`,
+      entreprise: `${storedData.entreprise}`,
+      tel: `${storedData.tel}`,
+      currentPassword: `${storedData.password}`,
+      NewPassword: `${storedData.password}`,
+      confirmNewPassword: `${storedData.password}`,
+    }
   });
 
-  useEffect(() => {
-    localStorage.setItem('formData', JSON.stringify(formData))
-  }, [formData]);
 
   const handleUpdate = (e) => {
-    const { lastname, value } = e.target;
-    if (formData !== null) {
-      setFormData({ ...formData, [lastname]: value });
-    }
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    console.log("set", e.target.name)
+    console.log("setFormData", formData)
   };
 
   const handleSubmmit = (e) => {
+
     e.preventDefault();
     Update(formData);
-    localStorage.removeItem('formData');
+    localStorage.removeItem('user');
+    localStorage.setItem('user', JSON.stringify(formData))
+
+
   };
-  
+
+
   const Update = async (formData) => {
-    await Axios.put(`/users/updateUser/${formData._id}`, { ...formData })
-    alert("User modifié avec succés !");
+    await Axios.post(`/users/updateUser/${storedData._id}`, { ...formData })
+    alert("Votre Compte modifier avec success");
     history.push("/components/innerPages/ContactUsPage")
   };
+
 
 
 
@@ -101,18 +103,23 @@ export default ({
             <Heading>{heading}</Heading>
             {description && <Description>{description}</Description>}
 
-            <Form action={formAction} method={formMethod} onSubmit={handleSubmmit}>
-              <Input type="text" name="Lastname" placeholder="Nom" value={formData.lastname} onChange={handleUpdate} ></Input>
-              <Input type="text" name="FirstName" placeholder="Prenom" value={formData.firstname} onChange={handleUpdate} />
-              <Input type="email" name="email" placeholder="Adress Email " value={formData.email} onChange={handleUpdate} />
-              <Input type="password" placeholder="Mot de passe" value={formData.password} onChange={handleUpdate} />
-              <Input type="tel" placeholder="Numero de Telephone" value={formData.tel} onChange={handleUpdate} />
-              <Input type="text" placeholder="nom de l'entreprise" value={formData.entreprisse} onChange={handleUpdate} />
+
+            <Form action={formAction} method={formMethod} onSubmit={handleSubmmit} className="w-full max-w-sm">
+              <Input type="text" name="lastname" placeholder="Nom" defaultValue={storedData.lastname} onChange={(e) => handleUpdate(e)} />
+              <Input type="text" name="firstname" placeholder="Prenom" defaultValue={storedData.firstname} onChange={(e) => handleUpdate(e)} />
+              <Input type="email" name="email" placeholder="Adress Email " defaultValue={storedData.email} onChange={(e) => handleUpdate(e)} />
+              <Input type="tel" name="tel" placeholder="Numero de Telephone" defaultValue={storedData.tel} onChange={(e) => handleUpdate(e)} minLength={8} maxLength={8} size={8} />
+              <Input type="text" name="entreprise" placeholder="nom de l'entreprise" defaultValue={storedData.entreprise} onChange={(e) => handleUpdate(e)} />
+
+
+
+
               <SubmitButton type="submit"  >{submitButtonText}</SubmitButton>
             </Form>
           </TextContent>
         </TextColumn>
       </TwoColumn>
+
     </Container>
   );
 };

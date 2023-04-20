@@ -327,8 +327,9 @@ router.post("/updateUser/:id", async (req, res) => {
         user.email = req.body.email;
         user.tel = req.body.tel;
         user.entreprise = req.body.entreprise;
+        user.password = req.body.password
         user.save();
-        res.send({ msg: "Utilisateur modifié" });
+        res.send({ msg: "Votre compte mise à jours avec success" });
     });
 });
 
@@ -382,5 +383,38 @@ router.post("/updateEntreprise/:id", async (req, res) => {
     });
 });
 
-     
+// delete 
+router.delete("/delete/:id", async (req, res) => {
+
+
+    try {
+
+        const _id = req.params.id;
+        const result = await User.findByIdAndDelete(_id);
+        if (!result) {
+            res.json({
+                status: "SUCCESS",
+                message: "Record is Delete successfully"
+            })
+        }
+        else {
+            res.json({
+                status: "FAILLED",
+                message: "Record not Delete successfull"
+            })
+        }
+    } catch (error) {
+        res.send(error)
+    }
+
+})
+// get all users 
+router.get('/GetAllUsers', async (req, res) => {
+    try {
+        const user = await User.find({})
+        res.send(user)
+    } catch (error) {
+        console.log(error)
+    }
+})
 module.exports = router;

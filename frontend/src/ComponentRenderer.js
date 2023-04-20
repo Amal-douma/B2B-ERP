@@ -93,6 +93,8 @@ import SimpleSubscribeNewsletterForm from "components/forms/SimpleSubscribeNewsl
 import TwoColContactUsForm from "components/forms/TwoColContactUsWithIllustration.js";
 import TwoColContactUsFullForm from "components/forms/TwoColContactUsWithIllustrationFullForm.js";
 
+
+
 import GetStartedCTA from "components/cta/GetStarted.js";
 import GetStartedLightCTA from "components/cta/GetStartedLight.js";
 import DownloadAppCTA from "components/cta/DownloadApp.js";
@@ -106,8 +108,11 @@ import LandingPageFooter from "components/footers/LandingPageFooter.js";
 // import List from 'components/global/list/List.js';
 import topbar from "components/global/navbar/Navbar.js";
 import sidbar from "components/global/sidebar/sidbar.js";
- import Produit from 'components/global/produit'
+import Produit from 'components/global/produit'
 import Dashbord from 'components/global/Dashbord';
+import users from 'components/global/users/users';
+import adduser from 'components/global/adduser';
+
 
 export const components = {
   landingPages: {
@@ -439,16 +444,27 @@ export const components = {
           component: sidbar,
           url: "/components/blocks/global/sidbar",
         },
-        Produit:{
-          name:"Produit",
-          component:Produit,
-          url:"/components/blocks/global/Produit"
+        Produit: {
+          name: "Produit",
+          component: Produit,
+          url: "/components/blocks/global/Produit"
         },
-        Dashbord:{
-          name:"Dashbord",
-          component:Dashbord,
-          url:"/components/blocks/global/Dashbord"
-        }
+        Dashbord: {
+          name: "Dashbord",
+          component: Dashbord,
+          url: "/components/blocks/global/Dashbord"
+        },
+        users: {
+          name: "users",
+          component: users,
+          url: "/components/blocks/global/users"
+        },
+        adduser: {
+          name: "adduser",
+          component: adduser,
+          url: "/components/blocks/global/adduser"
+        },
+
       }
     },
     FAQS: {
